@@ -7,7 +7,7 @@ from flask_cors import CORS
 from utils import APIException, generate_sitemap
 from datastructures import FamilyStructure
 #from models import Person
-.
+
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
@@ -38,7 +38,15 @@ def handle_hello():
 
 
     return jsonify(response_body), 200
-
+@app.route('/members', methods=['POST'])
+def create_member():
+    create = request.json
+    respuesta = jackson_family.add_member(create)
+    return jsonify(respuesta)
+def delete_member():
+    borrar = request.json
+    respuesta_2=jackson_family.delete_member(borrar)
+    return jsonify(respuesta_2)
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
     PORT = int(os.environ.get('PORT', 3000))
